@@ -1,0 +1,89 @@
+name: folio
+description: Live portfolio developed in flutter 3.0.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # github
+  github: ^9.24.0
+
+  # web related
+  flutter_html: any
+  url_strategy: ^0.3.0
+  universal_html: ^2.2.4
+
+  # http
+  http: ^1.2.2
+
+  # utils
+  mailto: ^2.0.0
+  flip_card: ^0.7.0
+  url_launcher: ^6.3.0
+  cupertino_icons: ^1.0.8
+  carousel_slider: ^5.0.0
+  animated_text_kit: ^4.2.2
+  font_awesome_flutter: ^10.7.0
+  flutter_svg: ^2.0.10+1
+  another_stepper: ^1.2.2
+  dio: ^5.7.0
+  provider: ^6.1.2
+  shared_preferences: ^2.3.2
+  flutter_markdown: ^0.7.3+2
+  go_router: ^14.3.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app/1024.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  windows:
+    generate: true
+    image_path: "assets/app/1024.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/app/1024.png"
+
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+    - assets/cpd/
+    - assets/departs/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/montserrat/montserrat.ttf
+    
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins/Poppins-Regular.ttf
+        - asset: fonts/poppins/Poppins-Light.ttf
+        - asset: fonts/poppins/Poppins-Bold.ttf
+          weight: 900
+        - asset: fonts/poppins/Poppins-Medium.ttf
+          weight: 300
+        - asset: fonts/poppins/Poppins-SemiBold.ttf
+          weight: 500
+        - asset: fonts/poppins/Poppins-Italic.ttf
+          style: italic
