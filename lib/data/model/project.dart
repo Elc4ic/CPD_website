@@ -1,25 +1,29 @@
 import 'package:folio/generated/assets.dart';
 
 part 'equipment.dart';
+
 part 'project_details.dart';
+
 part 'tag.dart';
+
 part 'user.dart';
+
 part 'image.dart';
 
 class Project {
   final int id;
-  final String name, annotation;
-  final String? img, owner;
+  final String name ;
+  final String? img, owner,status;
   final DateTime? created, updated;
   final List<Tag> tags;
 
   Project({
     required this.id,
     required this.name,
-    required this.annotation,
-    required this.tags,
     this.owner,
     this.img,
+    this.status,
+    required this.tags,
     this.created,
     this.updated,
   });
@@ -32,10 +36,10 @@ class Project {
 
 Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       id: json['id'] as int,
-      name: ((json['name'] as String).length > 36)
-          ? "${(json['name'] as String).substring(0, 40)}..."
+      name: ((json['name'] as String).length > 100)
+          ? "${(json['name'] as String).substring(0, 98)}..."
           : (json['name'] as String),
-      annotation: json['annotation'] as String,
+      status: json['status'] as String?,
       owner: json['owner'] as String?,
       img: json['img'] == null ? Assets.cpd91451 : json['img'] as String?,
       tags: (json['tags'] as List<dynamic>)
@@ -52,7 +56,7 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
 Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'annotation': instance.annotation,
+      'status': instance.status,
       'owner': instance.owner,
       'created': instance.created,
       'updated': instance.updated,

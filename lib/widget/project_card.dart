@@ -7,13 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProjectCard extends StatefulWidget {
-
   final Project project;
 
-  const ProjectCard({
-    super.key,
-    required this.project
-  });
+  const ProjectCard({super.key, required this.project});
 
   @override
   ProjectCardState createState() => ProjectCardState();
@@ -25,88 +21,102 @@ class ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
 
-    return InkWell(
-      hoverColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: () {
-        context.push('/project/${widget.project.id}');
-      },
-      onHover: (isHovering) {
-        if (isHovering) {
-          setState(() {
-            isHover = true;
-          });
-        } else {
-          setState(() {
-            isHover = false;
-          });
-        }
-      },
-      child: Container(
-        margin: Space.h,
-        padding: Space.all(),
-        width: AppDimensions.normalize(150),
-        height: AppDimensions.normalize(90),
-        decoration: BoxDecoration(
-            color: appProvider.isDark ? Colors.grey[900] : Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: isHover
-                    ? AppTheme.core!.primary!.withAlpha(100)
-                    : Colors.black.withAlpha(100),
-                blurRadius: 12.0,
-                offset: const Offset(0.0, 0.0),
-              )
-            ]),
-        child: Stack(
-          fit: StackFit.expand,
+    return Container(
+      decoration: BoxDecoration(
+          color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: isHover
+                  ? AppTheme.core!.primary!.withAlpha(100)
+                  : Colors.black.withAlpha(100),
+              blurRadius: 5.0,
+              offset: const Offset(0.0, 0.0),
+            )
+          ]),
+      child: InkWell(
+        onTap: () {
+          context.push('/project/${widget.project.id}');
+        },
+        onHover: (isHovering) {
+          if (isHovering) {
+            setState(() {
+              isHover = true;
+            });
+          } else {
+            setState(() {
+              isHover = false;
+            });
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.project.annotation,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: height * 0.01,
-                ),
-              ],
-            ),
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 400),
-              opacity: isHover ? 0.0 : 1.0,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: widget.project.img != null
-                    ? SizedBox(
-                  height: AppDimensions.normalize(90),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Image.asset(
-                          fit: BoxFit.fill,
-                          widget.project.img!,
-                        ),
-                      ),
-                      Expanded(
-                        child:
-                        Text(widget.project.name, style: AppText.b2b),
-                      )
-                    ],
+            Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: Space.all(1,0.5),
+                  child: Text(widget.project.status ?? "unknown",
+                      style: AppText.b2),
+                )),
+            Expanded(
+                flex: 4,
+                child: Container(
+                  width: double.infinity,
+                  child: Image.asset(
+                    widget.project.img ?? "",
+                    fit: BoxFit.fitWidth,
                   ),
-                )
-                    : Container(),
+                )),
+            Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: Space.all(1, 1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          children: List.generate(widget.project.tags.length,
+                              (index) {
+                            return Chip(
+                              label: Text(widget.project.tags[index].name,
+                                  style: AppText.b2),
+                            );
+                          }),
+                        ),
+                        Space.y!,
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.project.name,
+                                style: AppText.b1b,
+                              ),
+                              Space.y!,
+                              Text(
+                                "Руководитель: ${widget.project.owner}",
+                                style: AppText.b2,
+                              ),
+                            ]),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Divider(),
+                  Padding(
+                    padding: Space.all(),
+                    child: Text(
+                      "Создан: ${widget.project.created}",
+                      style: AppText.b2,
+                    ),
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),

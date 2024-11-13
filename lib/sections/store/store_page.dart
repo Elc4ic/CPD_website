@@ -62,7 +62,7 @@ class _StoreState extends State<Store> {
                 padding: Space.h!,
                 sliver: ProjectGrid(
                   width: MediaQuery.of(context).size.width,
-                  cellWidth: 350,
+                  cellWidth: 400,
                   items: widget.rep.projects,
                 ),
               ),

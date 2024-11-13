@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:folio/data/model/project.dart';
 import 'package:folio/data/service/project_service.dart';
 import 'package:folio/sections/equipment/equipment_page.dart';
 import 'package:folio/sections/main/main_section.dart';

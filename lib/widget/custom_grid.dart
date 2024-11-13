@@ -14,14 +14,17 @@ class ProjectGrid extends StatelessWidget {
     return SliverGrid.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: width ~/ cellWidth,
-        childAspectRatio: 3 / 2,
+        childAspectRatio: 4/5,
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
       ),
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) {
-        return ProjectCard(
-          project: items[index],
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ProjectCard(
+            project: items[index],
+          ),
         );
       },
     );
