@@ -1,8 +1,8 @@
+import 'package:cpdsite/widget/custom_text_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/generated/assets.dart';
-import 'package:folio/utils/project_utils.dart';
-import 'package:folio/widget/custom_text_heading.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/generated/assets.dart';
+import 'package:cpdsite/utils/project_utils.dart';
 import 'package:go_router/go_router.dart';
 
 class PlacesMobileTab extends StatelessWidget {

@@ -2,15 +2,12 @@ part of 'project.dart';
 
 class User {
   final int id;
-  final String name, about, role;
-  final int projectId;
+  final String first_name, last_name;
 
   User({
-    required this.about,
-    required this.role,
-    required this.projectId,
+    required this.last_name,
     required this.id,
-    required this.name,
+    required this.first_name,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -19,17 +16,13 @@ class User {
 }
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      name: json['name'] as String,
+      first_name: json['first_name'] as String,
       id: json['id'] as int,
-      projectId: json['project_id'] as int,
-      about: json['about'] as String,
-      role: json['role'] as String,
+      last_name: json['last_name'] as String,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
-      'project_id': instance.projectId,
-      'about': instance..about,
-      'role': instance.role,
+      'first_name': instance.first_name,
+      'last_name': instance.last_name,
     };

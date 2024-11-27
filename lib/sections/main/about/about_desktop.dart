@@ -1,10 +1,10 @@
 import 'package:another_stepper/widgets/another_stepper.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/generated/assets.dart';
-import 'package:folio/sections/main/about/stepper.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/generated/assets.dart';
+import 'package:cpdsite/sections/main/about/stepper.dart';
 
-import 'package:folio/widget/custom_text_heading.dart';
+import 'package:cpdsite/widget/custom_text_heading.dart';
 
 class AboutDesktop extends StatelessWidget {
   const AboutDesktop({super.key});
@@ -43,8 +43,8 @@ class AboutDesktop extends StatelessWidget {
                       stepperDirection: Axis.vertical,
                       iconWidth: 80,
                       iconHeight: 60,
-                      activeBarColor: AppTheme.core!.primary!,
-                      inActiveBarColor: AppTheme.core!.primary!,
+                      activeBarColor: Theme.of(context).colorScheme.primary,
+                      inActiveBarColor: Theme.of(context).colorScheme.primary,
                       inverted: false,
                       verticalGap: AppDimensions.normalize(14),
                       activeIndex: 0,

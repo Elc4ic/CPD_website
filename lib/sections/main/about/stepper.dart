@@ -1,8 +1,8 @@
 import 'package:another_stepper/dto/stepper_data.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_theme.dart';
-import 'package:folio/configs/app_typography.dart';
-import 'package:folio/configs/space.dart';
+
+import 'package:cpdsite/configs/app_typography.dart';
+import 'package:cpdsite/configs/space.dart';
 
 
 List<StepperData> getStepperData(BuildContext context) {
@@ -32,7 +32,7 @@ List<StepperData> getStepperData(BuildContext context) {
           margin: Space.h,
           padding: Space.all(),
           decoration: BoxDecoration(
-              color: AppTheme.core!.primary!,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.all(Radius.circular(20))),
           child: const Icon(Icons.looks_one, color: Colors.white),
         )),
@@ -49,7 +49,7 @@ List<StepperData> getStepperData(BuildContext context) {
           margin: Space.h,
           padding: Space.all(),
           decoration: BoxDecoration(
-              color: AppTheme.core!.primary!,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.all(Radius.circular(20))),
           child: const Icon(Icons.looks_two, color: Colors.white),
         )),
@@ -66,7 +66,7 @@ List<StepperData> getStepperData(BuildContext context) {
           margin: Space.h,
           padding: Space.all(),
           decoration: BoxDecoration(
-              color: AppTheme.core!.primary!,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.all(Radius.circular(20))),
           child: const Icon(Icons.looks_3, color: Colors.white),
         )),
@@ -83,7 +83,7 @@ List<StepperData> getStepperData(BuildContext context) {
         margin: Space.h,
         padding: Space.all(),
         decoration: BoxDecoration(
-            color: AppTheme.core!.primary!,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: const Icon(Icons.looks_4, color: Colors.white),
       ),

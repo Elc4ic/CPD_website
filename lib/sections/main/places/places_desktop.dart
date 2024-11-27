@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/utils/project_utils.dart';
-import 'package:folio/widget/custom_text_heading.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/utils/project_utils.dart';
+import 'package:cpdsite/widget/custom_text_heading.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../generated/assets.dart';
@@ -30,7 +30,7 @@ class _PlacesDesktopState extends State<PlacesDesktop> {
             text:
                 "Мы обладаем всем необходимым оборудованием для воплощения идей в жизнь.\n\n",
           ),
-          Space.y!,
+          Space.y2!,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -67,7 +67,7 @@ class _PlacesDesktopState extends State<PlacesDesktop> {
               ),
             ],
           ),
-          Space.y!,
+          Space.y2!,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

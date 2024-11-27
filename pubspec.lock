@@ -175,13 +175,21 @@ packages:
     source: hosted
     version: "0.7.3+2"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       sha256: "7b4ca6cf3304575fe9c8ec64813c8d02ee41d2afe60bcfe0678bcb5375d596a2"
       url: "https://pub.dev"
     source: hosted
     version: "2.0.10+1"
+  flutter_svg_provider:
+    dependency: "direct main"
+    description:
+      name: flutter_svg_provider
+      sha256: cda47ab350671ba51ae4605d48f4c82fa5a2c399d22ebda367c1b407234c5048
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -200,14 +208,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
-  github:
+  footer:
     dependency: "direct main"
     description:
-      name: github
-      sha256: "57f6ad78591f9638e903409977443093f862d25062a6b582a3c89e4ae44e4814"
+      name: footer
+      sha256: a39e481859cc63ff99627c21d4b20aabac4e85e52641fe623982e1186feea585
       url: "https://pub.dev"
     source: hosted
-    version: "9.24.0"
+    version: "0.0.4"
   go_router:
     dependency: "direct main"
     description:
@@ -240,14 +248,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -296,14 +296,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  mailto:
-    dependency: "direct main"
-    description:
-      name: mailto
-      sha256: f8c5ce39e0eaa94a856795b2855af7f66aac37f7c3b70ac5c26ab00b94685445
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   markdown:
     dependency: transitive
     description:

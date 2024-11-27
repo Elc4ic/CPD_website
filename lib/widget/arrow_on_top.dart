@@ -1,10 +1,9 @@
-import 'package:folio/animations/entrance_fader.dart';
-import 'package:folio/configs/app_dimensions.dart';
+import 'package:cpdsite/animations/entrance_fader.dart';
+import 'package:cpdsite/configs/app_dimensions.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_theme.dart';
-import 'package:folio/configs/space.dart';
-import 'package:folio/provider/app_provider.dart';
-import 'package:folio/provider/scroll_provider.dart';
+import 'package:cpdsite/configs/space.dart';
+import 'package:cpdsite/provider/app_provider.dart';
+import 'package:cpdsite/provider/scroll_provider.dart';
 import 'package:provider/provider.dart';
 
 class ArrowOnTop extends StatefulWidget {
@@ -65,7 +64,7 @@ class ArrowOnTopState extends State<ArrowOnTop> {
                   ),
                   child: Icon(
                     Icons.rocket,
-                    color: AppTheme.core!.primary!,
+                    color: Theme.of(context).colorScheme.primary,
                     size: MediaQuery.of(context).size.height * 0.04,
                   ),
                 ),

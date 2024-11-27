@@ -1,10 +1,15 @@
+import 'package:cpdsite/widget/appbar.dart';
+import 'package:cpdsite/widget/error_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_dimensions.dart';
-import 'package:folio/configs/app_typography.dart';
-import 'package:folio/configs/space.dart';
-import 'package:folio/data/service/project_service.dart';
-import 'package:folio/sections/main/widgets/footer.dart';
-import 'package:folio/widget/custom_grid.dart';
+import 'package:cpdsite/configs/app_dimensions.dart';
+import 'package:cpdsite/configs/app_typography.dart';
+import 'package:cpdsite/configs/space.dart';
+import 'package:cpdsite/data/service/service.dart';
+import 'package:cpdsite/sections/main/widgets/footer.dart';
+import 'package:cpdsite/widget/custom_grid.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/scroll_provider.dart';
 
 class Store extends StatefulWidget {
   const Store({super.key, required this.rep});
@@ -16,66 +21,67 @@ class Store extends StatefulWidget {
 }
 
 class _StoreState extends State<Store> {
-  final ScrollController controller = ScrollController();
+  late final scrollProvider = Provider.of<ScrollProvider>(context);
 
   @override
   void initState() {
-    Service.state(context).getProjectList("");
+    Service.provider(context).getProjectList("");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.rep.isLoading
+    return widget.rep.state == ServiceState.loading
         ? Center(child: CircularProgressIndicator())
-        : CustomScrollView(
-            controller: controller,
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: EdgeInsets.only(top: AppDimensions.normalize(20)),
-                  padding: Space.all(0.5, 1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Витрина проектов",
-                        style: AppText.h3,
+        : widget.rep.state == ServiceState.failure
+            ? ErrorCenter(
+                onPressed: () {
+                  Service.provider(context).getProjectList("");
+                },
+                error: widget.rep.error!)
+            : Stack(
+                children: [
+                  CustomScrollView(
+                    controller: scrollProvider.controller,
+                    slivers: [
+                      SliverPadding(
+                        padding: Space.navbarMobile!,
+                        sliver: SliverPadding(
+                          padding: Space.all(2),
+                          sliver: ProjectGrid(
+                            width: MediaQuery.of(context).size.width,
+                            cellWidth: 400,
+                            items: widget.rep.projects,
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Visibility(
+                          visible: widget.rep.projects.isEmpty,
+                          child: Center(
+                            child: Text(
+                              "Search: not found",
+                              style: AppText.b1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SliverVisibility(
+                          visible: widget.rep.projects.length < 5 &&
+                              MediaQuery.of(context).size.width > 1050,
+                          sliver: SliverToBoxAdapter(
+                            child: Space.yf(5),
+                          )),
+                      SliverToBoxAdapter(
+                        child: AppFooter(),
                       ),
                     ],
                   ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Visibility(
-                  visible: widget.rep.projects.isEmpty,
-                  child: Center(
-                    child: Text(
-                      "Search: not found",
-                      style: AppText.b1,
-                    ),
+                  Appbar(
+                    go: "/",
+                    title: "Проекты",
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: Space.h!,
-                sliver: ProjectGrid(
-                  width: MediaQuery.of(context).size.width,
-                  cellWidth: 400,
-                  items: widget.rep.projects,
-                ),
-              ),
-              SliverVisibility(
-                  visible: widget.rep.projects.length < 5 &&
-                      MediaQuery.of(context).size.width > 1050,
-                  sliver: SliverToBoxAdapter(
-                    child: Space.yf(5),
-                  )),
-              SliverToBoxAdapter(
-                child: Footer(),
-              ),
-            ],
-          );
+                ],
+              );
   }
 }

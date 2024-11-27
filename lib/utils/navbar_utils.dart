@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NavBarUtils {
   static List<NavItem> names = [
     NavItem('ГЛАВНАЯ', "/", Icons.home),
-    NavItem('ВИТРИНА', "/store", Icons.store),
+    NavItem('ПРОЕКТЫ', "/store", Icons.store),
     NavItem('ОБОРУДОВАНИЕ', "/equipment", Icons.warehouse_outlined),
   ];
 }

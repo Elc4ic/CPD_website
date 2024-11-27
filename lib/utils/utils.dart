@@ -1,14 +1,24 @@
+import 'package:cpdsite/data/model/project.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_typography.dart';
-import 'package:folio/data/model/project.dart';
-import 'package:folio/sections/main/about/about.dart';
-import 'package:folio/sections/main/home/home.dart';
-import 'package:folio/sections/main/places/places.dart';
-import 'package:folio/sections/main/services/services.dart';
+import 'package:cpdsite/sections/main/about/about.dart';
+import 'package:cpdsite/sections/main/home/home.dart';
+import 'package:cpdsite/sections/main/places/places.dart';
+import 'package:cpdsite/sections/main/services/services.dart';
 
+import '../configs/app_typography.dart';
+import '../configs/space.dart';
 import '../sections/main/widgets/footer.dart';
 
 class StaticUtils {
+  static const double navbar= 26;
+  static const double footer= 60;
+
+  static const String apiUrl = 'https://api.cpd.metadb.ru';
+  static const String defaultImage = '$apiUrl/static/img/base_project.png';
+  static const String defaultImage2 = '/static/img/base_project.png';
+  static const String projectApiUrl = '$apiUrl/api/site/projects';
+  static const String equipmentApiUrl = '$apiUrl/api/site/equipments';
+
   static const String CPD_SIGN_IN_FORM =
       "https://docs.google.com/forms/d/e/1FAIpQLScsaWkskgiHnPrlSfHysnT3_RHx6p5O6_YP_9zbt-vRrM_fNA/viewform";
   static const String CPD_FORM_PROJECT =
@@ -27,27 +37,21 @@ class StaticUtils {
   ];
 
   static List<Widget> projectCardTags(List<Tag> tags) {
-    return List.generate(
-      tags.length,
-      (index) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          OutlinedButton(
-            onPressed: () {},
-            child: Text('#${tags[index].name}', style: AppText.l2b!),
-          ),
-        ],
-      ),
-    );
+    return List.generate(tags.length, (index) {
+      return Chip(
+        label: Text(tags[index].name, style: AppText.b3),
+      );
+    });
   }
 }
 
 class BodyUtils {
-  static const List<Widget> views = [
+  static List<Widget> views = [
     HomePage(),
     About(),
     Services(),
     Places(),
-    Footer(),
+    Space.y2!,
+    AppFooter(),
   ];
 }

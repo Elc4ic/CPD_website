@@ -1,18 +1,14 @@
 part of 'project.dart';
 
 class Equipment {
-  final int id;
   final String name;
-  final String? content;
-  final String? img;
-  final List<Tag> tags;
+  final String? description;
+  final String img;
 
   Equipment({
-    required this.id,
+    this.description,
     required this.name,
-    this.content,
-    this.img,
-    required this.tags,
+    required this.img,
   });
 
   factory Equipment.fromJson(Map<String, dynamic> json) =>
@@ -20,11 +16,7 @@ class Equipment {
 }
 
 Equipment _$EquipmentFromJson(Map<String, dynamic> json) => Equipment(
-      id: json['id'] as int,
+      description: json['description'] as String?,
       name: json['name'] as String,
-      img: json['img'] as String?,
-      content: json['content'] as String?,
-      tags: (json['tags'] as List<dynamic>)
-          .map((e) => Tag.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      img: json['img'] as String,
     );

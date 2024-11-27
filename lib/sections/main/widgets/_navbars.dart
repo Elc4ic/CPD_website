@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../animations/entrance_fader.dart';
 import '../../../configs/app_dimensions.dart';
-import '../../../configs/app_theme.dart';
 import '../../../configs/space.dart';
 import '../../../provider/app_provider.dart';
 import '../../../provider/drawer_provider.dart';
@@ -24,32 +23,35 @@ class NavbarDesktop extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(
-              blurRadius: 7.0, spreadRadius: 2.0, color: Colors.grey)
+          BoxShadow(blurRadius: 4.0, spreadRadius: 1.0, color: Colors.grey)
         ],
         color: appProvider.isDark ? Colors.black : Colors.white,
       ),
-      width: AppDimensions.normalize(26),
+      width: AppDimensions.normalize(StaticUtils.navbar),
       padding: Space.all(0.2),
       child: Column(
         children: [
-          const NavBarLogo(),
+          Container(
+              height: AppDimensions.normalize(22),
+              child: const NavBarLogo(),
+          ),
           Space.y!,
           ...NavBarUtils.names.map(
-            (e) => Padding(
-              padding: Space.v!,
-              child: IconButton(
-                tooltip: e.name,
-                highlightColor: Colors.white54,
-                splashRadius: AppDimensions.normalize(10),
-                onPressed: () {
-                  context.go(e.route);
-                },
-                icon: Icon(
-                  e.icon,
+                (e) =>
+                Padding(
+                  padding: Space.v!,
+                  child: IconButton(
+                    tooltip: e.name,
+                    highlightColor: Colors.white54,
+                    splashRadius: AppDimensions.normalize(10),
+                    onPressed: () {
+                      context.go(e.route);
+                    },
+                    icon: Icon(
+                      e.icon,
+                    ),
+                  ),
                 ),
-              ),
-            ),
           ),
           Space.y!,
           EntranceFader(
@@ -59,11 +61,18 @@ class NavbarDesktop extends StatelessWidget {
             child: MaterialButton(
               height: AppDimensions.normalize(20),
               minWidth: AppDimensions.normalize(20),
-              hoverColor: AppTheme.core!.primary!.withAlpha(150),
+              hoverColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary
+                  .withAlpha(150),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 side: BorderSide(
-                  color: AppTheme.core!.primary!,
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .primary,
                 ),
               ),
               onPressed: () {
@@ -81,10 +90,13 @@ class NavbarDesktop extends StatelessWidget {
             value: appProvider.isDark,
             onChanged: (value) {
               appProvider.setTheme(
-                !value ? ThemeMode.light : ThemeMode.dark,
+                !value ? themeList[0] : themeList[1],
               );
             },
-            activeColor: AppTheme.core!.primary!,
+            activeColor: Theme
+                .of(context)
+                .colorScheme
+                .primary,
           ),
           Space.x!,
         ],
@@ -116,6 +128,7 @@ class NavBarTablet extends StatelessWidget {
             ),
           ),
           Space.xm!,
+
           const NavBarLogo(),
           Space.x1!,
         ],

@@ -1,25 +1,23 @@
 part of '../project_page.dart';
 
 Widget projectTeam(BuildContext context, ProjectDetails details) {
-  return Padding(
-    padding: Space.h2!,
+  return Container(
+    width: double.infinity,
+    padding: Space.all(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Space.y!,
-        Text("Руководитель", style: AppText.h3b),
+        Text("Руководитель", style: AppText.b1b),
         Space.y!,
-        TeamCard(
-            user: User(
-                about: "Руководит",
-                role: "Руководитель",
-                id: 40,
-                name: details.owner,
-                projectId: 40)),
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: TeamCard(user: details.owner ?? details.users.first),
+        ),
         Space.y!,
         Text(
           "Команда",
-          style: AppText.h3b,
+          style: AppText.b1b,
         ),
         Space.y!,
         Wrap(
@@ -53,42 +51,28 @@ class _TeamCardState extends State<TeamCard> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        height: 250,
-        width: 250,
-        padding: Space.all(),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 60,
-              width: 60,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.cyan),
-            ),
-            Space.y!,
-            Text(
-              widget.user.name,
-              style: AppText.b2,
-            ),
-            Space.y!,
-            Text(
-              widget.user.role,
-              style: AppText.b2?.copyWith(color: Colors.black54),
-            ),
-            Space.y!,
-            Text(
-              widget.user.about,
-              style: AppText.b2,
-            ),
-          ],
+    return Card(
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 120,
+          width: 240,
+          padding: Space.all(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.cyan,
+              ),
+              Space.y!,
+              Text(
+                "${widget.user.last_name} ${widget.user.first_name}",
+                style: AppText.b2,
+              ),
+            ],
+          ),
         ),
       ),
     );

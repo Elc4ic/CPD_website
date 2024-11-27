@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'ui.dart';
 
 class AppDimensions {
-  static double? maxContainerWidth;
-  static double? miniContainerWidth;
 
-  static bool? isLandscape;
   static double? padding;
   static double ratio = 0;
 
@@ -28,8 +25,6 @@ class AppDimensions {
 
   static _initLargeScreens() {
     const safe = 2.4;
-
-    ratio *= 1.5;
 
     if (ratio > safe) {
       ratio = safe;
@@ -57,6 +52,6 @@ class AppDimensions {
   }
 
   static double font(double unit) {
-    return (AppDimensions.ratio * unit * 0.125) + unit * 1.90;
+    return (AppDimensions.ratio * unit * 0.35) + unit * 1.3;
   }
 }

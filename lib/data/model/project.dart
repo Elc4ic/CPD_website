@@ -1,4 +1,5 @@
-import 'package:folio/generated/assets.dart';
+import 'package:cpdsite/data/model/passport.dart';
+import 'package:cpdsite/generated/assets.dart';
 
 part 'equipment.dart';
 
@@ -11,9 +12,11 @@ part 'user.dart';
 part 'image.dart';
 
 class Project {
-  final int id;
-  final String name ;
-  final String? img, owner,status;
+  final int id, status;
+  final String name;
+
+  final String? img, customer;
+  final User? owner;
   final DateTime? created, updated;
   final List<Tag> tags;
 
@@ -22,7 +25,8 @@ class Project {
     required this.name,
     this.owner,
     this.img,
-    this.status,
+    this.customer,
+    required this.status,
     required this.tags,
     this.created,
     this.updated,
@@ -39,9 +43,11 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       name: ((json['name'] as String).length > 100)
           ? "${(json['name'] as String).substring(0, 98)}..."
           : (json['name'] as String),
-      status: json['status'] as String?,
-      owner: json['owner'] as String?,
-      img: json['img'] == null ? Assets.cpd91451 : json['img'] as String?,
+      status: json['status'] as int,
+      customer: json['customer'] as String?,
+      owner:
+          json['owner'] == null ? null : User.fromJson(json['owner']) as User?,
+      img: json['img'] as String?,
       tags: (json['tags'] as List<dynamic>)
           .map((e) => Tag.fromJson(e as Map<String, dynamic>))
           .toList(),

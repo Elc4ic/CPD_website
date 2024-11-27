@@ -3,15 +3,16 @@ part of 'project.dart';
 class ImageEntity {
   final int id;
   final String url;
-  final int projectId;
+  final bool isMain;
 
   ImageEntity({
+    required this.isMain,
     required this.id,
-    required this.projectId,
     required this.url,
   });
 
-  factory ImageEntity.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  factory ImageEntity.fromJson(Map<String, dynamic> json) =>
+      _$ImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImageToJson(this);
 }
@@ -19,11 +20,10 @@ class ImageEntity {
 ImageEntity _$ImageFromJson(Map<String, dynamic> json) => ImageEntity(
       url: json['url'] as String,
       id: json['id'] as int,
-      projectId: json['project_id'] as int,
+      isMain: json['is_main'] as bool,
     );
 
 Map<String, dynamic> _$ImageToJson(ImageEntity instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.url,
-      'project_id': instance.projectId,
     };

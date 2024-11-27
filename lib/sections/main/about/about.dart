@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:folio/responsive/responsive.dart';
-import 'package:folio/sections/main/about/about_desktop.dart';
+import 'package:cpdsite/responsive/responsive.dart';
+import 'package:cpdsite/sections/main/about/about_desktop.dart';
 
 import 'about_mobile.dart';
 

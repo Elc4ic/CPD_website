@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
+import 'package:cpdsite/configs/configs.dart';
 
 class App {
-  static bool? isLtr;
-  static bool showAds = false;
-
   static init(BuildContext context) {
     UI.init(context);
     AppDimensions.init();
-    AppTheme.init(context);
     Space.init();
     AppText.init();
-    isLtr = Directionality.of(context) == TextDirection.ltr;
   }
 }

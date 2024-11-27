@@ -1,17 +1,16 @@
+import 'package:cpdsite/configs/core_theme.dart';
+import 'package:cpdsite/data/service/projects_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/data/service/project_service.dart';
-import 'package:folio/provider/app_provider.dart';
-import 'package:folio/provider/drawer_provider.dart';
-import 'package:folio/provider/scroll_provider.dart';
-import 'package:folio/routing.dart';
+import 'package:cpdsite/data/service/service.dart';
+import 'package:cpdsite/provider/app_provider.dart';
+import 'package:cpdsite/provider/drawer_provider.dart';
+import 'package:cpdsite/provider/scroll_provider.dart';
+import 'package:cpdsite/routing.dart';
 import 'package:provider/provider.dart';
-import 'package:url_strategy/url_strategy.dart';
-import 'package:folio/configs/core_theme.dart' as theme;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  setPathUrlStrategy();
 
   runApp(const MyApp());
 }
@@ -31,6 +30,7 @@ class MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Service(dio: dio)),
+        ChangeNotifierProvider(create: (_) => ProjectService(dio: dio)),
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => DrawerProvider()),
         ChangeNotifierProvider(create: (_) => ScrollProvider()),
@@ -66,9 +66,7 @@ class _MaterialChildState extends State<MaterialChild> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Центр проектной деятельности',
-      theme: theme.themeLight,
-      themeMode: widget.provider.themeMode,
-      darkTheme: theme.themeDark,
+      theme: AppTheme(widget.provider.scheme),
       routerConfig: router,
     );
   }

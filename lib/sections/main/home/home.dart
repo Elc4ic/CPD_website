@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:folio/responsive/responsive.dart';
-import 'package:folio/sections/main/home/home_desktop.dart';
-import 'package:folio/sections/main/home/home_mobile.dart';
-import 'package:folio/sections/main/home/home_tab.dart';
+import 'package:cpdsite/responsive/responsive.dart';
+import 'package:cpdsite/sections/main/home/home_desktop.dart';
+import 'package:cpdsite/sections/main/home/home_mobile.dart';
+import 'package:cpdsite/sections/main/home/home_tab.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -2,12 +2,10 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_dimensions.dart';
-import 'package:folio/configs/app_theme.dart';
-import 'package:folio/configs/space.dart';
-import 'package:folio/provider/app_provider.dart';
-import 'package:folio/utils/utils.dart';
-import 'package:folio/widget/services_card_back.dart';
+import 'package:cpdsite/configs/app_dimensions.dart';
+import 'package:cpdsite/configs/space.dart';
+import 'package:cpdsite/provider/app_provider.dart';
+import 'package:cpdsite/widget/services_card_back.dart';
 import 'package:provider/provider.dart';
 
 class ServiceCard extends StatefulWidget {
@@ -64,7 +62,7 @@ class _ServiceCardState extends State<ServiceCard> {
             boxShadow: isHover
                 ? [
                     BoxShadow(
-                      color: AppTheme.core!.primary!.withAlpha(100),
+                      color: Theme.of(context).colorScheme.primary.withAlpha(100),
                       blurRadius: 12.0,
                       offset: const Offset(0.0, 0.0),
                     )
@@ -92,7 +90,7 @@ class _ServiceCardState extends State<ServiceCard> {
             boxShadow: isHover
                 ? [
                     BoxShadow(
-                      color: AppTheme.core!.primary!.withAlpha(100),
+                      color: Theme.of(context).colorScheme.primary.withAlpha(100),
                       blurRadius: 12.0,
                       offset: const Offset(0.0, 0.0),
                     )

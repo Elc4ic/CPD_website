@@ -1,16 +1,15 @@
-import 'package:flutter_html/flutter_html.dart';
-import 'package:folio/configs/app.dart';
-import 'package:folio/configs/space.dart';
-import 'package:folio/provider/drawer_provider.dart';
-import 'package:folio/provider/scroll_provider.dart';
-import 'package:folio/responsive/responsive.dart';
-import 'package:folio/sections/main/widgets/_mobile_drawer.dart';
-import 'package:folio/sections/main/widgets/_navbars.dart';
-import 'package:folio/utils/utils.dart';
+import 'package:cpdsite/configs/app.dart';
+import 'package:cpdsite/configs/space.dart';
+import 'package:cpdsite/provider/drawer_provider.dart';
+import 'package:cpdsite/provider/scroll_provider.dart';
+import 'package:cpdsite/responsive/responsive.dart';
+import 'package:cpdsite/sections/main/widgets/_mobile_drawer.dart';
+import 'package:cpdsite/sections/main/widgets/_navbars.dart';
+import 'package:cpdsite/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'package:folio/widget/arrow_on_top.dart';
+import 'package:cpdsite/widget/arrow_on_top.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.child});

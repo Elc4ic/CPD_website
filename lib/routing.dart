@@ -1,9 +1,10 @@
+import 'package:cpdsite/data/service/projects_service.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/data/service/project_service.dart';
-import 'package:folio/sections/equipment/equipment_page.dart';
-import 'package:folio/sections/main/main_section.dart';
-import 'package:folio/sections/store/project_page.dart';
-import 'package:folio/sections/store/store_page.dart';
+import 'package:cpdsite/data/service/service.dart';
+import 'package:cpdsite/sections/equipment/equipment_page.dart';
+import 'package:cpdsite/sections/main/main_section.dart';
+import 'package:cpdsite/sections/store/project_page.dart';
+import 'package:cpdsite/sections/store/store_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -26,12 +27,12 @@ GoRouter router = GoRouter(
           builder: (context, state) => const Body(),
           routes: [
             GoRoute(
-              path: 'project/:id',
+              path: 'store/:id',
               name: AppRoute.project.name,
               pageBuilder: (context, state) {
                 final productId = state.pathParameters['id']!;
                 return MaterialPage(
-                  child: Consumer<Service>(
+                  child: Consumer<ProjectService>(
                     builder: (context, value, _) => ProjectPage(
                       id: int.parse(productId),
                       rep: value,

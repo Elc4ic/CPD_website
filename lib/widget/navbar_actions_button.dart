@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:folio/animations/entrance_fader.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/provider/scroll_provider.dart';
-import 'package:folio/routing.dart';
+import 'package:cpdsite/animations/entrance_fader.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/provider/scroll_provider.dart';
+import 'package:cpdsite/routing.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +31,7 @@ class NavBarActionButton extends StatelessWidget {
         child: MaterialButton(
           splashColor: Colors.white54,
           highlightColor: Colors.white54,
-          hoverColor: AppTheme.core!.primary,
+          hoverColor: Theme.of(context).colorScheme.primary,
           onPressed: () {
             context.go(go);
           },

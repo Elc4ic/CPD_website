@@ -1,19 +1,18 @@
+import 'package:cpdsite/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:folio/configs/app_dimensions.dart';
-import 'package:folio/configs/app_theme.dart';
-import 'package:folio/configs/app_typography.dart';
-import 'package:folio/provider/app_provider.dart';
-import 'package:folio/widget/social_links.dart';
+import 'package:cpdsite/configs/app_dimensions.dart';
+import 'package:cpdsite/configs/app_typography.dart';
+import 'package:cpdsite/provider/app_provider.dart';
+import 'package:cpdsite/widget/social_links.dart';
 import 'package:provider/provider.dart';
 
 import '../../../configs/space.dart';
 import '../../../generated/assets.dart';
 
-class Footer extends StatelessWidget {
-  const Footer({super.key});
+class AppFooter extends StatelessWidget {
+  const AppFooter({super.key});
 
-  //footer
   final String DVFU = "Дальневосточный федеральный университет, 2012-2024";
   final String FOOTER =
       "Инфраструктура для выполнения\nнаучно-технических проектов и\nопытно-конструкторских работ.";
@@ -21,29 +20,66 @@ class Footer extends StatelessWidget {
   final String ADDRES = "ДВФУ, корпус С, С305";
   final String CPD_MAIL = "cpd@dvfu.ru";
 
+
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
+    double width = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(top: AppDimensions.normalize(10)),
       padding: Space.all(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      height: AppDimensions.normalize(StaticUtils.footer),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(blurRadius: 4.0, spreadRadius: 1.0, color: Colors.grey)
+        ],
+        color: appProvider.isDark ? Colors.black : Colors.white,
+      ),
+      child: Wrap(
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.spaceAround,
         children: [
-          Container(
-            margin: Space.all(),
-            width: AppDimensions.normalize(120),
-            height: AppDimensions.normalize(60),
-            decoration: BoxDecoration(
-                color: appProvider.isDark ? Colors.grey[900] : Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(100),
-                    blurRadius: 12.0,
-                    offset: const Offset(0.0, 0.0),
-                  )
-                ]),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Контакты',
+                style: AppText.b2b,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.mail,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  Text(
+                    CPD_MAIL,
+                    style: AppText.b2!,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  Text(
+                    ADDRES,
+                    style: AppText.b2!,
+                  ),
+
+                ],
+              ),
+              SocialLinks(scale: 0.5)
+            ],
+          ),
+          Visibility(
+            visible: width > 700,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,76 +88,15 @@ class Footer extends StatelessWidget {
                   FOOTER,
                   style: AppText.b2,
                 ),
-                SocialLinks(scale: 0.55)
               ],
             ),
           ),
-          Container(
-            margin: Space.h,
-            width: AppDimensions.normalize(120),
-            height: AppDimensions.normalize(60),
-            decoration: BoxDecoration(
-                color: appProvider.isDark ? Colors.grey[900] : Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(100),
-                    blurRadius: 12.0,
-                    offset: const Offset(0.0, 0.0),
-                  )
-                ]),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Контакты',
-                  style: AppText.b2b,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.mail,
-                      color: AppTheme.core!.primary,
-                    ),
-                    Text(
-                      CPD_MAIL,
-                      style: AppText.b2!,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      color: AppTheme.core!.primary,
-                    ),
-                    Text(
-                      ADDRES,
-                      style: AppText.b2!,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          SizedBox(
+            width: AppDimensions.normalize(40),
+            height: AppDimensions.normalize(26),
+            child: SvgPicture.asset(Assets.assetsCpdBlack,
+                color: Theme.of(context).colorScheme.onSurface),
           ),
-          Spacer(),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Image.asset(
-              Assets.cpdFacebookPost42,
-              width: AppDimensions.normalize(100),
-              height: AppDimensions.normalize(30),
-            ),
-            SizedBox(
-              width: AppDimensions.normalize(60),
-              height: AppDimensions.normalize(30),
-              child: SvgPicture.asset(Assets.assetsCpdBlack,
-                  color:
-                      AppTheme.isDark(context) ? Colors.white : Colors.black),
-            ),
-          ])
         ],
       ),
     );

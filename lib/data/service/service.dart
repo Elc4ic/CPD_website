@@ -1,86 +1,72 @@
+import 'package:cpdsite/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:folio/generated/assets.dart';
 import 'package:provider/provider.dart';
 
 import '../model/project.dart';
+
+enum ServiceState { init, loading, success, failure }
 
 class Service extends ChangeNotifier {
   Service({
     required this.dio,
   });
 
-  static Service state(BuildContext context, [bool listen = false]) =>
+  static Service provider(BuildContext context, [bool listen = false]) =>
       Provider.of<Service>(context, listen: listen);
 
   final Dio dio;
-  final String projectApiUrl = 'https://cpd.dvfu.ru/api/projects/';
-  final String equipmentApiUrl = 'https://cpd.dvfu.ru/api/equipments/';
 
   List<Project> _projects = [];
   List<Equipment> _equipment = [];
-  late ProjectDetails _project;
-  bool _isLoading = false;
+  ServiceState _state = ServiceState.init;
+  Object? _error;
 
   Future<void> getProjectList(String search) async {
-    _isLoading = true;
-
-    // List<Project> projectList = [];
-
-    final response = await dio.get(projectApiUrl);
-    final data = response.data as List<dynamic>;
-    final List<Project> projectList = data.map((e) {
-      return Project.fromJson(e);
-    }).toList();
-    _projects = projectList.where((a) => a.name.contains(search)).toList();
-
-    /*   for (int i = 0; i < 10; i++) {
-      projectList.add(Project(
-          id: i,
-          name: 'Project $i',
-          status: 'active',
-          owner: 'scscscscscs',
-          img: Assets.cpdMobileRoadMap,
-          created: DateTime.now(),
-          updated: DateTime.now(),
-          tags: []));
-    }*/
-
-    _projects = projectList;
-    _isLoading = false;
-    notifyListeners();
+    if (_projects.isEmpty) {
+      _state = ServiceState.loading;
+      try {
+        final response = await dio.get(StaticUtils.projectApiUrl);
+        final data = response.data as List<dynamic>;
+        final List<Project> projectList = data.map((e) {
+          return Project.fromJson(e);
+        }).toList();
+        _projects = projectList.where((a) => a.name.contains(search)).toList();
+        _state = ServiceState.success;
+      } catch (e) {
+        _error = e;
+        _state = ServiceState.failure;
+      } finally {
+        notifyListeners();
+      }
+    }
   }
 
-  @override
-  Future<void> getProject(int id) async {
-    _isLoading = true;
-    final response = await dio.get('$projectApiUrl$id');
-    final details = ProjectDetails.fromJson(response.data);
-    _project = details;
-    _isLoading = false;
-    notifyListeners();
+  Future<void> getEquipmentList() async {
+    if (_equipment.isEmpty) {
+      _state = ServiceState.loading;
+      try {
+        final response = await dio.get(StaticUtils.equipmentApiUrl);
+        final data = response.data as List<dynamic>;
+        List<Equipment> equipment = data.map((e) {
+          return Equipment.fromJson(e);
+        }).toList();
+        _equipment = equipment;
+        _state = ServiceState.success;
+      } catch (e) {
+        _error = e;
+        _state = ServiceState.failure;
+      } finally {
+        notifyListeners();
+      }
+    }
   }
 
   List<Project> get projects => _projects;
 
   List<Equipment> get equipment => _equipment;
 
-  ProjectDetails get project => _project;
+  ServiceState get state => _state;
 
-  bool get isLoading => _isLoading;
-
-  Future<void> getEquipmentList() async {
-    _isLoading = true;
-    List<Equipment> equipment = [];
-
-    final response = await dio.get(equipmentApiUrl);
-    final data = response.data as List<dynamic>;
-    equipment = data.map((e) {
-      return Equipment.fromJson(e);
-    }).toList();
-
-    _equipment = equipment;
-    _isLoading = false;
-    notifyListeners();
-  }
+  Object? get error => _error;
 }

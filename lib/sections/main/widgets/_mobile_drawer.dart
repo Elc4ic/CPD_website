@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../configs/app_theme.dart';
 import '../../../configs/app_typography.dart';
 import '../../../provider/app_provider.dart';
 import '../../../provider/scroll_provider.dart';
@@ -34,7 +33,7 @@ class MobileDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(
                   Icons.light_mode,
-                  color: AppTheme.core!.primary!,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 title: const Text(
                   "Dark Mode",
@@ -43,10 +42,9 @@ class MobileDrawer extends StatelessWidget {
                   inactiveTrackColor: Colors.grey,
                   value: appProvider.isDark,
                   onChanged: (value) {
-                    appProvider
-                        .setTheme(value ? ThemeMode.dark : ThemeMode.light);
+                    appProvider.setTheme(value ? themeList[1] : themeList[0]);
                   },
-                  activeColor: AppTheme.core!.primary,
+                  activeColor: Theme.of(context).colorScheme.primary,
                 ),
               ),
               const Divider(),
@@ -54,7 +52,7 @@ class MobileDrawer extends StatelessWidget {
                 (e) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: MaterialButton(
-                    hoverColor: AppTheme.core!.primary!.withAlpha(70),
+                    hoverColor: Theme.of(context).colorScheme.primary.withAlpha(70),
                     onPressed: () {
                       context.go(e.route);
                       Navigator.pop(context);
@@ -62,7 +60,7 @@ class MobileDrawer extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(
                         e.icon,
-                        color: AppTheme.core!.primary,
+                        color:Theme.of(context).colorScheme.primary,
                       ),
                       title: Text(
                         e.name,
@@ -75,10 +73,10 @@ class MobileDrawer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: MaterialButton(
-                  hoverColor: AppTheme.core!.primary!.withAlpha(150),
+                  hoverColor: Theme.of(context).colorScheme.primary.withAlpha(150),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      side: BorderSide(color: AppTheme.core!.primary!)),
+                      side: BorderSide(color: Theme.of(context).colorScheme.primary)),
                   onPressed: () =>
                       launchUrl(Uri.parse(StaticUtils.CPD_SIGN_IN_FORM)),
                   child: const ListTile(

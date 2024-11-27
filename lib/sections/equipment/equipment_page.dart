@@ -1,8 +1,16 @@
+import 'dart:math';
+
+import 'package:cpdsite/provider/scroll_provider.dart';
+import 'package:cpdsite/utils/utils.dart';
+import 'package:cpdsite/widget/appbar.dart';
+import 'package:cpdsite/widget/error_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/data/service/project_service.dart';
-import 'package:folio/sections/equipment/equipment_card.dart';
-import 'package:folio/sections/main/widgets/footer.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/data/service/service.dart';
+import 'package:cpdsite/sections/equipment/equipment_card.dart';
+import 'package:cpdsite/sections/main/widgets/footer.dart';
+import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 class EquipmentPage extends StatefulWidget {
   const EquipmentPage({super.key, required this.rep});
@@ -14,69 +22,75 @@ class EquipmentPage extends StatefulWidget {
 }
 
 class _StoreState extends State<EquipmentPage> {
-  final ScrollController controller = ScrollController();
+  late final scrollProvider = Provider.of<ScrollProvider>(context);
 
   @override
   void initState() {
-    Service.state(context).getEquipmentList();
+    Service.provider(context).getEquipmentList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.rep.isLoading
+    Size size = MediaQuery.of(context).size;
+    double cardWidth = (size.width / (size.width ~/ 350));
+    int cardInRow = size.width ~/ cardWidth;
+    int rows = widget.rep.equipment.length ~/ cardInRow;
+    int addRow = rows % cardInRow != 0 ? 1 : 0;
+    double constrainHeight = (rows + addRow) * (cardWidth / 2 * 3) + 50;
+    print(" cardInRow $cardInRow  addRow $addRow constrain $constrainHeight card $cardWidth  rows $rows");
+    return widget.rep.state == ServiceState.loading
         ? Center(child: CircularProgressIndicator())
-        : CustomScrollView(
-      controller: controller,
-      slivers: [
-        SliverToBoxAdapter(
-          child: Container(
-            padding: Space.all(0.5, 1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Склад оборудования",
-                  style: AppText.h3,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: Space.h!,
-          sliver: SliverGrid.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery
-                .of(context)
-                .size
-                .width ~/ 550,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15,
-          ),
-          itemCount: widget.rep.equipment.length,
-          itemBuilder: (BuildContext context, int index) {
-            return EquipmentCard(
-              equipment: widget.rep.equipment[index],
-            );
-          },
-        ),
-        ),
-        SliverVisibility(
-            visible: widget.rep.projects.length < 5 &&
-                MediaQuery
-                    .of(context)
-                    .size
-                    .width > 1050,
-            sliver: SliverToBoxAdapter(
-              child: Space.yf(5),
-            )),
-        SliverToBoxAdapter(
-          child: Footer(),
-        ),
-      ],
-    );
+        : widget.rep.state == ServiceState.failure
+            ? ErrorCenter(
+                onPressed: () {
+                  Service.provider(context).getEquipmentList();
+                },
+                error: widget.rep.error!)
+            : Stack(
+                children: [
+                  CustomScrollView(
+                    controller: scrollProvider.controller,
+                    slivers: [
+                      SliverToBoxAdapter(
+                          child: SizedBox(
+                        height: max(
+                            size.height -
+                                AppDimensions.normalize(StaticUtils.footer),
+                            constrainHeight),
+                        child: Padding(
+                          padding: Space.all(),
+                          child: Padding(
+                            padding: Space.navbarMobile!,
+                            child: GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: max(1, size.width ~/ 350),
+                                childAspectRatio: 2 / 3,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 15,
+                              ),
+                              itemCount: widget.rep.equipment.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return EquipmentCard(
+                                  equipment: widget.rep.equipment[index],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      )),
+                      SliverToBoxAdapter(
+                        child: AppFooter(),
+                      ),
+                    ],
+                  ),
+                  Appbar(
+                    go: "/",
+                    title: "Оборудование",
+                  ),
+                ],
+              );
   }
 }

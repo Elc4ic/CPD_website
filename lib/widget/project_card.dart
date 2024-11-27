@@ -1,7 +1,8 @@
+import 'package:cpdsite/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:folio/configs/configs.dart';
-import 'package:folio/data/model/project.dart';
-import 'package:folio/provider/app_provider.dart';
+import 'package:cpdsite/configs/configs.dart';
+import 'package:cpdsite/data/model/project.dart';
+import 'package:cpdsite/provider/app_provider.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
@@ -24,20 +25,20 @@ class ProjectCardState extends State<ProjectCard> {
 
     return Container(
       decoration: BoxDecoration(
-          color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
               color: isHover
-                  ? AppTheme.core!.primary!.withAlpha(100)
-                  : Colors.black.withAlpha(100),
-              blurRadius: 5.0,
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.black12,
+              blurRadius: 10.0,
               offset: const Offset(0.0, 0.0),
             )
           ]),
       child: InkWell(
         onTap: () {
-          context.push('/project/${widget.project.id}');
+          context.go('/store/${widget.project.id}');
         },
         onHover: (isHovering) {
           if (isHovering) {
@@ -55,38 +56,37 @@ class ProjectCardState extends State<ProjectCard> {
           children: [
             Expanded(
                 flex: 1,
-                child: Padding(
-                  padding: Space.all(1,0.5),
-                  child: Text(widget.project.status ?? "unknown",
-                      style: AppText.b2),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: Space.h!,
+                    child: Text(
+                        widget.project.status == 1 ? "Активен" : "Неизвестно",
+                        style: AppText.b3),
+                  ),
                 )),
             Expanded(
-                flex: 4,
-                child: Container(
+                flex: 6,
+                child: SizedBox(
                   width: double.infinity,
-                  child: Image.asset(
-                    widget.project.img ?? "",
+                  child: Image.network(
+                    "${StaticUtils.apiUrl}${widget.project.img ?? StaticUtils.defaultImage2}",
                     fit: BoxFit.fitWidth,
                   ),
                 )),
             Expanded(
-              flex: 6,
+              flex: 8,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: Space.all(1, 1),
+                    padding: Space.all(1, 0.5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Wrap(
-                          children: List.generate(widget.project.tags.length,
-                              (index) {
-                            return Chip(
-                              label: Text(widget.project.tags[index].name,
-                                  style: AppText.b2),
-                            );
-                          }),
+                          children:
+                              StaticUtils.projectCardTags(widget.project.tags),
                         ),
                         Space.y!,
                         Column(
@@ -94,29 +94,31 @@ class ProjectCardState extends State<ProjectCard> {
                             children: [
                               Text(
                                 widget.project.name,
-                                style: AppText.b1b,
+                                style: AppText.b2b,
                               ),
                               Space.y!,
                               Text(
-                                "Руководитель: ${widget.project.owner}",
-                                style: AppText.b2,
+                                "Руководитель: ${widget.project.owner?.last_name} ${widget.project.owner?.first_name} ",
+                                style: AppText.b3,
                               ),
                             ]),
                       ],
                     ),
                   ),
                   Spacer(),
-                  Divider(),
+                  Divider(
+                    height: 1,
+                  ),
                   Padding(
                     padding: Space.all(),
                     child: Text(
-                      "Создан: ${widget.project.created}",
-                      style: AppText.b2,
+                      "Заказчик: ${widget.project.customer}",
+                      style: AppText.b3,
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

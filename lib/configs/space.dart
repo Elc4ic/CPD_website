@@ -20,6 +20,7 @@ class Space {
   static EdgeInsets? h2;
   static EdgeInsets? v2;
   static EdgeInsets? navbarDesktop;
+  static EdgeInsets? navbarMobile;
 
   static Widget? top;
   static Widget? bottom;
@@ -47,6 +48,7 @@ class Space {
     h2 = EdgeInsets.symmetric(horizontal: AppDimensions.space(2));
     v2 = EdgeInsets.symmetric(vertical: AppDimensions.space(2));
     navbarDesktop = EdgeInsets.only(left: AppDimensions.normalize(26));
+    navbarMobile = EdgeInsets.only(top: AppDimensions.normalize(26));
 
     top = SizedBox(height: UI.padding!.top);
     bottom = SizedBox(height: UI.padding!.bottom);

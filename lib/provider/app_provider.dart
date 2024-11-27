@@ -1,51 +1,51 @@
+import 'package:cpdsite/configs/core_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final themeMap = {
-  "dark": ThemeMode.dark,
-  "light": ThemeMode.light,
+  "light": scheme(themeColors()),
+  "dark": scheme(darkColors()),
 };
+
+final themeList = ["light", "dark"];
 
 class AppProvider extends ChangeNotifier {
   static AppProvider state(BuildContext context, [bool listen = false]) =>
       Provider.of<AppProvider>(context, listen: listen);
 
-  ThemeMode _themeMode = ThemeMode.light;
-  ThemeMode get themeMode => _themeMode;
+  ColorScheme _scheme = themeMap[themeList[0]]!;
+  late String theme = themeList[0];
 
-  bool get isDark => _themeMode == ThemeMode.dark;
+  ColorScheme get scheme => _scheme;
+
+  bool get isDark => theme == "dark";
 
   void init() async {
     final prefs = await SharedPreferences.getInstance();
 
     String? stringTheme = prefs.getString('theme');
 
-    ThemeMode? theme =
-        stringTheme == null ? ThemeMode.light : themeMap[stringTheme];
-
-    if (theme == null) {
-      await prefs.setString(
-          'theme', ThemeMode.light.toString().split(".").last);
-
-      _themeMode = ThemeMode.light;
+    if (stringTheme != null) {
+      theme = stringTheme;
+      _scheme = themeMap[stringTheme]!;
     }
-    _themeMode = theme!;
-
     notifyListeners();
   }
 
-  void setTheme(ThemeMode newTheme) async {
+  void setTheme(String newTheme) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (_themeMode == newTheme) {
+    if (theme == newTheme) {
       return;
     }
-    _themeMode = newTheme;
+    theme = newTheme;
+    _scheme = themeMap[theme]!;
 
     await prefs.setString(
       'theme',
-      newTheme.toString().split('.').last,
+      theme,
     );
+
     notifyListeners();
   }
 }

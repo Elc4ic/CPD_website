@@ -8,14 +8,6 @@ class UI {
   static double? horizontal;
   static double? vertical;
   static EdgeInsets? padding;
-  static EdgeInsets? vi;
-
-  static double? _safeAreaHorizontal;
-  static double? _safeAreaVertical;
-  static double? safeWidth;
-  static double? safeHeight;
-
-  static double? diagonal;
 
   static bool? w300;
   static bool? w360;
@@ -32,23 +24,14 @@ class UI {
     initChecks(_mediaQueryData!);
 
     padding = _mediaQueryData!.padding;
-    vi = _mediaQueryData!.viewInsets;
     width = _mediaQueryData!.size.width;
     height = _mediaQueryData!.size.height;
     horizontal = width! / 100;
     vertical = height! / 100;
-
-    _safeAreaHorizontal =
-        _mediaQueryData!.padding.left + _mediaQueryData!.padding.right;
-    _safeAreaVertical =
-        _mediaQueryData!.padding.top + _mediaQueryData!.padding.bottom;
-    safeWidth = (width! - _safeAreaHorizontal!);
-    safeHeight = (height! - _safeAreaVertical!);
   }
 
   static initChecks(MediaQueryData query) {
     var size = query.size;
-    diagonal = sqrt((size.width * size.width) + (size.height * size.height));
     w300 = size.width > 300;
     w360 = size.width > 360;
     w480 = size.width > 480;
@@ -62,5 +45,4 @@ class UI {
 
   static MediaQueryData mediaQuery() => _mediaQueryData!;
 
-  static Size getSize() => _mediaQueryData!.size;
 }

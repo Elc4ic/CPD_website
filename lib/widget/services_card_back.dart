@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:folio/configs/app_dimensions.dart';
-import 'package:folio/configs/app_theme.dart';
-import 'package:folio/configs/app_typography.dart';
-import 'package:folio/provider/app_provider.dart';
-import 'package:folio/utils/utils.dart';
+import 'package:cpdsite/configs/app_dimensions.dart';
+import 'package:cpdsite/configs/app_typography.dart';
+import 'package:cpdsite/provider/app_provider.dart';
+import 'package:cpdsite/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,9 +32,9 @@ class ServiceCardBackWidget extends StatelessWidget {
           height: AppDimensions.normalize(14),
           width: AppDimensions.normalize(60),
           child: MaterialButton(
-            color: AppTheme.core!.primary,
+            color: Theme.of(context).colorScheme.primary,
             onPressed: () {
-              launchUrl(Uri.parse(StaticUtils.CPD_FORM_PROJECT));
+              launchUrl(Uri.parse(StaticUtils.CPD_SIGN_IN_FORM));
             },
             child: Text(
               'Вступить',
